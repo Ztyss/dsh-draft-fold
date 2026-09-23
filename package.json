@@ -1,6 +1,6 @@
 {
   "name": "@ztyss/dsh-draft-fold",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "私有维护版：上游 Heyflyingpig/dsh-draft-fold 已删库，本仓保留预构建副本。折叠超长输入草稿为摘要卡，不改 DSH 消息提交。",
   "type": "module",
   "main": "lib/index.js",
@@ -26,6 +26,9 @@
   "license": "MIT",
   "engines": {
     "node": ">=22.19.0"
+  },
+  "scripts": {
+    "test": "vitest run"
   },
   "dsh": {
     "bundle": {

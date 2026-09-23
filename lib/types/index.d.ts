@@ -1,7 +1,4 @@
-/** Host half: the bundle is intentionally presentation-only. */
-export declare const name = "dsh-draft-fold";
-export { Config } from './config.ts';
-export type { Config as LongDraftInputConfig } from './config.ts';
+/** Host half: registers the draft-fold settings namespace with the settings service. */
+export declare const name = "@ztyss/dsh-draft-fold";
 /** The browser half is loaded through exports["./client"]. */
-export declare function apply(): void;
-//# sourceMappingURL=index.d.ts.map
+export declare function apply(ctx: unknown): void;

@@ -1,8 +1,6 @@
 # Add this bundle as a browser-capable DSH plugin.
-# The profile may override threshold and previewChars in a later patch layer.
+# Runtime fold limits live in the durable settings document (插件 → 插件配置 →
+# 草稿折叠); the loader entry carries no config since 0.2.0.
 - insert:
     - id: "@ztyss/dsh-draft-fold"
       name: "@ztyss/dsh-draft-fold"
-      config:
-        threshold: 2000
-        previewChars: 120
