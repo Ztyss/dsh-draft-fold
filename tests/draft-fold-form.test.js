@@ -117,4 +117,17 @@ describe("DraftFoldCardController（暂存表单）", () => {
 		await face.save();
 		expect(writes).toEqual([]);
 	});
+
+	it("快照在无变更时保持同一对象（useSyncExternalStore 缓存契约）", async () => {
+		const { DraftFoldCardController } = await loadClientModule();
+		const controller = new DraftFoldCardController(readyScope());
+		const face = controller.inject();
+		const store = face.hooks.draftFoldCard;
+		const first = store.getSnapshot();
+		expect(store.getSnapshot()).toBe(first);
+		face.edit("threshold", "500");
+		const second = store.getSnapshot();
+		expect(second).not.toBe(first);
+		expect(second.threshold.text).toBe("500");
+	});
 });

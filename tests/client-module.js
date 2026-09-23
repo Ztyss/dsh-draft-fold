@@ -13,10 +13,17 @@ export async function loadClientModule() {
 		import("react-dom"),
 		import("react/jsx-runtime")
 	]);
+	const reactCjs = react.default ?? react;
+	const h = reactCjs.createElement;
+	const primitivesStub = {
+		Tag: (props) => h("span", { "data-tag": props.tone ?? "" }, props.children),
+		IconChevronDownOutline14: (props) => h("svg", { className: props.className })
+	};
 	const bare = {
-		react: react.default ?? react,
+		react: reactCjs,
 		"react-dom": reactDom.default ?? reactDom,
-		"react/jsx-runtime": jsxRuntime.default ?? jsxRuntime
+		"react/jsx-runtime": jsxRuntime.default ?? jsxRuntime,
+		"@deepseek-ai/dsh-client-ui-primitives": primitivesStub
 	};
 	cached = factory((id) => {
 		const value = bare[id];
