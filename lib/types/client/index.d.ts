@@ -20,6 +20,15 @@ export declare function createEffectiveStore(scope: unknown): {
     subscribe(listener: () => void): () => boolean;
     stop(): void;
 };
+/** Dock store that starts on defaults and re-binds when the settings face activates. */
+export declare function createDeferredEffectiveStore(): {
+    getSnapshot(): {
+        threshold: number;
+        previewChars: number;
+    };
+    subscribe(listener: () => void): () => boolean;
+    attach(scope: unknown): void;
+};
 /** Staged form over the draft-fold namespace. */
 export declare class DraftFoldCardController {
     constructor(scope: unknown);
@@ -35,6 +44,15 @@ export declare class DraftFoldCardController {
 }
 /** The 草稿折叠 settings card rendered from one staged-form snapshot. */
 export declare function DraftFoldCard(props: {
+    t: (key: string, params?: Record<string, unknown>) => string;
+    useDraftFoldCard: <T>(selector: (snapshot: any) => T) => T;
+    edit(field: string, text: string): void;
+    save(): Promise<void>;
+    discard(): void;
+    resetField(field: string): Promise<void>;
+}): unknown;
+/** Plugins-tab page shell (0.1.7+): the settings card inside a plain list wrapper. */
+export declare function DraftFoldTab(props: {
     t: (key: string, params?: Record<string, unknown>) => string;
     useDraftFoldCard: <T>(selector: (snapshot: any) => T) => T;
     edit(field: string, text: string): void;

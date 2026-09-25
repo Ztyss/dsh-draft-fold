@@ -1,7 +1,7 @@
 {
   "name": "@ztyss/dsh-draft-fold",
-  "version": "0.2.0",
-  "description": "私有维护版：上游 Heyflyingpig/dsh-draft-fold 已删库，本仓保留预构建副本。折叠超长输入草稿为摘要卡，不改 DSH 消息提交。",
+  "version": "0.3.0",
+  "description": "私有维护版：上游 Heyflyingpig/dsh-draft-fold 已删库，本仓保留预构建副本。折叠超长输入草稿为摘要卡，不改 DSH 消息提交。兼容内核 0.1.5（settingsScope）与 0.1.7+（configForms/Config 投影）。",
   "type": "module",
   "main": "lib/index.js",
   "exports": {

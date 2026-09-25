@@ -1,6 +1,7 @@
 # Add this bundle as a browser-capable DSH plugin.
 # Runtime fold limits live in the durable settings document (插件 → 插件配置 →
-# 草稿折叠); the loader entry carries no config since 0.2.0.
+# 草稿折叠)。内核 ≤0.1.5：显式 settings.register("draft-fold")；内核 0.1.7+：
+# 由 loader entry 的 Config（lib/index.js 导出）投影为设置文档（namespace == entry id）。
 - insert:
     - id: "@ztyss/dsh-draft-fold"
       name: "@ztyss/dsh-draft-fold"
