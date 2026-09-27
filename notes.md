@@ -1,1 +1,0 @@
-﻿0.1.7+ 的设置卡从内核内置插件清单页（settings.plugins.tab）迁移到插件管理页的 keyed 槽 plugins.bundle.config（key=bundle 包名，configForms.whileServed 守护），与 dsh-context / dsh-rewind 同位；DraftFoldTab 支持 summary/page 双视图，page 视图为平铺表单（无折叠卡壳）。0.1.5 路径不变。
