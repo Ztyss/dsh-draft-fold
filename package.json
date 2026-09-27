@@ -1,6 +1,7 @@
 {
   "name": "@ztyss/dsh-draft-fold",
-  "version": "0.3.1",
+  "version": "0.3.2",
+  "icon": "./assets/icon.svg",
   "description": "折叠超长输入草稿为附件式摘要卡：超过阈值时收起输入区并展示可配置的摘要预览，不改 DSH 的草稿状态、消息格式与发送路径。",
   "type": "module",
   "main": "lib/index.js",
@@ -20,6 +21,7 @@
     "lib/**/*.js",
     "lib/**/*.d.ts",
     "locale/*.json",
+    "assets/*.svg",
     "cordis.patch.yml",
     "README.md",
     "LICENSE"

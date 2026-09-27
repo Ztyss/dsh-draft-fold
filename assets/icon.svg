@@ -1,0 +1,19 @@
+<svg width="32" height="32" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- 草稿折叠插件图标。布局遵循官方 plugin artwork 规范（同 dsh-rewind）：
+       圆角 tile 内缩自画布（28/36，rx 8），填充沿用 Subagent 插件蓝竖向渐变
+       （#69B9FF → #324DE2）；白色圆头标记为 16-unit grid 折叠行字形
+       （两行文本 → 下折角 → 折叠后短行），scale 1.4 后墨盒居中于 tile 中心。 -->
+  <rect x="4" y="4" width="28" height="28" rx="8" fill="url(#draft_fold_blue)"/>
+  <g transform="translate(6.8 7.85) scale(1.4)" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <path d="M2.5 4h11"/>
+    <path d="M2.5 7h11"/>
+    <path d="M5.5 9.5 8 12l2.5-2.5"/>
+    <path d="M4.5 14h7"/>
+  </g>
+  <defs>
+    <linearGradient id="draft_fold_blue" x1="18" y1="4" x2="18" y2="32" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#69B9FF"/>
+      <stop offset="1" stop-color="#324DE2"/>
+    </linearGradient>
+  </defs>
+</svg>
