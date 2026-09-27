@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Draft fold",
+    "description": "Collapse long drafts into an attachment-style summary card: past the threshold the composer collapses into a configurable summary preview, without touching DSH draft state, message format, or the send path."
+  }
+}
