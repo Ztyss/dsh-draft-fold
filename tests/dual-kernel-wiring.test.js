@@ -1,5 +1,9 @@
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it } from "vitest";
+import { cleanup, render } from "@testing-library/react";
+import { createElement } from "react";
 import { loadClientModule } from "./client-module.js";
+
+afterEach(cleanup);
 
 /** 与内核同构的最小 settings 面：快照 + 订阅 + 写入。 */
 function fakeScope(value = { threshold: 500, previewChars: 60 }) {
@@ -85,25 +89,54 @@ describe("legacy 内核（≤0.1.5，settingsScope）", () => {
 });
 
 describe("0.1.7+ 内核（configForms，namespace == entry id）", () => {
-	it("configForms 注入回调：注册 settings.plugins.tab 页（DraftFoldTab 壳）", async () => {
+	it("configForms 注入回调：经 whileServed 注册 plugins.bundle.config 卡（key = bundle 包名）", async () => {
 		const mod = await loadClientModule();
 		const { ctx, injects, slotInjects, slotRegisters } = makeClientCtx();
 		mod.apply(ctx);
 		const modern = injects.find((row) => row.services.includes("configForms"));
+		const servedWith = [];
 		modern.fn({
-			configForms: { get: () => fakeScope() },
+			configForms: {
+				get: () => fakeScope(),
+				whileServed(namespaces, register) {
+					servedWith.push(namespaces);
+					register();
+					return () => {};
+				}
+			},
+			effect(fn) {
+				fn();
+				return () => {};
+			},
 			locale: ctx.locale,
 			slots: ctx.slots
 		});
-		expect(slotInjects.map((row) => row.name)).toEqual(["conversation.input.dock", "settings.plugins.tab"]);
-		const tab = slotRegisters.find((row) => row.options.name === "settings.plugins.tab");
-		expect(tab.options.id).toBe("draft-fold");
-		expect(tab.options.order).toBe(90);
-		expect(tab.options.locale).toBeTruthy();
-		expect(tab.options.label()).toBe("settings.title");
-		expect(tab.component).toBe(mod.DraftFoldTab);
-		const face = tab.options.inject();
+		expect(servedWith).toEqual([["@ztyss/dsh-draft-fold"]]);
+		expect(slotInjects.map((row) => row.name)).toEqual(["conversation.input.dock", "plugins.bundle.config"]);
+		const card = slotRegisters.find((row) => row.options.name === "plugins.bundle.config");
+		expect(card.options.key).toBe("@ztyss/dsh-draft-fold");
+		expect(card.options.locale).toBeTruthy();
+		expect(card.component).toBe(mod.DraftFoldTab);
+		const face = card.options.inject();
 		expect(Object.keys(face)).toEqual(["hooks", "edit", "save", "discard", "resetField"]);
+	});
+
+	it("DraftFoldTab 视图契约：summary 一行式、page 完整卡", async () => {
+		const mod = await loadClientModule();
+		const base = {
+			t: (key) => ({
+				"settings.summaryLine": "折叠阈值 {threshold} 字 · 摘要预览 {previewChars} 字"
+			})[key] ?? key,
+			useDraftFoldCard: (selector) => selector({ threshold: { value: 300 }, previewChars: { value: 120 } }),
+			edit() {},
+			save() {},
+			discard() {},
+			resetField() {}
+		};
+		const summary = render(createElement(mod.DraftFoldTab, { ...base, view: "summary" }));
+		expect(summary.container.querySelector(".dff-summaryLine").textContent).toBe("折叠阈值 300 字 · 摘要预览 120 字");
+		const page = render(createElement(mod.DraftFoldTab, { ...base, view: "page" }));
+		expect(page.container.querySelector("ul.dff-tabCards")).not.toBeNull();
 	});
 });
 

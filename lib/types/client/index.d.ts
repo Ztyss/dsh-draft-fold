@@ -51,8 +51,9 @@ export declare function DraftFoldCard(props: {
     discard(): void;
     resetField(field: string): Promise<void>;
 }): unknown;
-/** Plugins-tab page shell (0.1.7+): the settings card inside a plain list wrapper. */
+/** 插件页卡片（0.1.7+ plugins.bundle.config，keyed 槽）：summary 视图渲染一行式摘要；page 视图渲染完整设置卡。 */
 export declare function DraftFoldTab(props: {
+    view?: "summary" | "page";
     t: (key: string, params?: Record<string, unknown>) => string;
     useDraftFoldCard: <T>(selector: (snapshot: any) => T) => T;
     edit(field: string, text: string): void;

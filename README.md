@@ -19,14 +19,14 @@ dsh plugin add --profile web "github:Ztyss/dsh-draft-fold"
 - 折叠阈值（字符），默认 **300**
 - 摘要预览长度（字符），默认 **120**
 
-## 内核兼容性（0.3.0）
+## 内核兼容性（0.3.1）
 
 同一份产物双内核自适应，启动期零静态依赖设置服务（boot 门不再被 settingsScope 卡死）：
 
 | 内核 | 设置来源 | 浏览器侧读取 | 设置页形态 |
 |---|---|---|---|
 | ≤0.1.5（settingsScope） | 显式 `settings.register("draft-fold")` | `ctx.settingsScope.bind()` | `settings.plugin.item` 卡 |
-| 0.1.7+（Config 投影） | loader entry 的 `Config` 导出（volatile 字段，namespace == entry id） | `ctx.configForms.get(entryId)` | `settings.plugins.tab` 页 |
+| 0.1.7+（Config 投影） | loader entry 的 `Config` 导出（volatile 字段，namespace == entry id） | `ctx.configForms.get(entryId)` | 插件页卡片（`plugins.bundle.config`，keyed 槽，参照 dsh-context 范式） |
 
 两个 defer 注入按内核二选一触发；服务都缺席时折叠功能以默认值运行（300/120），不崩、不阻塞加载。
 
