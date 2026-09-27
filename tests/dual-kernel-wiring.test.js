@@ -121,13 +121,23 @@ describe("0.1.7+ 内核（configForms，namespace == entry id）", () => {
 		expect(Object.keys(face)).toEqual(["hooks", "edit", "save", "discard", "resetField"]);
 	});
 
-	it("DraftFoldTab 视图契约：summary 一行式、page 完整卡", async () => {
+	it("DraftFoldTab 视图契约：summary 一行式、page 平铺表单（无折叠卡壳）", async () => {
 		const mod = await loadClientModule();
+		const projection = {
+			available: true,
+			writable: true,
+			dirty: false,
+			saving: false,
+			failed: false,
+			invalid: false,
+			threshold: { value: 300, text: "300", valid: true, staged: false, overridden: false, max: 200000 },
+			previewChars: { value: 120, text: "120", valid: true, staged: false, overridden: false, max: 2000 }
+		};
 		const base = {
 			t: (key) => ({
 				"settings.summaryLine": "折叠阈值 {threshold} 字 · 摘要预览 {previewChars} 字"
 			})[key] ?? key,
-			useDraftFoldCard: (selector) => selector({ threshold: { value: 300 }, previewChars: { value: 120 } }),
+			useDraftFoldCard: (selector) => selector(projection),
 			edit() {},
 			save() {},
 			discard() {},
@@ -136,7 +146,9 @@ describe("0.1.7+ 内核（configForms，namespace == entry id）", () => {
 		const summary = render(createElement(mod.DraftFoldTab, { ...base, view: "summary" }));
 		expect(summary.container.querySelector(".dff-summaryLine").textContent).toBe("折叠阈值 300 字 · 摘要预览 120 字");
 		const page = render(createElement(mod.DraftFoldTab, { ...base, view: "page" }));
-		expect(page.container.querySelector("ul.dff-tabCards")).not.toBeNull();
+		expect(page.container.querySelector("div.dff-pageForm")).not.toBeNull();
+		expect(page.container.querySelector("#draft-fold-threshold").value).toBe("300");
+		expect(page.container.querySelector(".dff-header")).toBeNull();
 	});
 });
 
